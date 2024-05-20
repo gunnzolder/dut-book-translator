@@ -1,0 +1,12 @@
+
+# 13.2 Document Preparation and Similarity Computation
+
+As the text is not directly available in a multidimensional representation, the first step is to convert raw text documents to the multidimensional format. In cases where the documents are retrieved from the Web, additional steps are needed. This section will discuss these different steps.
+
+1. **Stop word removal**: Stop words are frequently occurring words in a language that are not very discriminative for mining applications. For example, the words “a,” “an,” and “the” are commonly occurring words that provide very little information about the actual content of the document. Typically, articles, prepositions, and conjunctions are stop words. Pronouns are also sometimes considered stop words. Standardized stop word lists are available in different languages for text mining. The key is to understand that almost all documents will contain these words, and they are usually not indicative of topical or semantic content. Therefore, such words add to the noise in the analysis, and it is prudent to remove them.
+
+2. **Stemming**: Variations of the same word need to be consolidated. For example, singular and plural representations of the same word, and different tenses of the same word are consolidated. In many cases, stemming refers to common root extraction from words, and the extracted root may not even be a word in of itself. For example, the common root of hopping and hope is hop. Of course, the drawback is that the word hop has a different meaning and usage of its own. Therefore, while stemming usually improves recall in document retrieval, it can sometimes worsen precision slightly. Nevertheless, stemming usually enables higher quality results in mining applications.
+
+3. **Punctuation marks**: After stemming has been performed, punctuation marks, such as commas and semicolons, are removed. Furthermore, numeric digits are removed. Hyphens are removed, if the removal results in distinct and meaningful words. Typically, a base dictionary may be available for these operations. Furthermore, the distinct parts of the hyphenated word can either be treated as separate words, or they may be merged into a single word.
+
+After the aforementioned steps, the resulting document may contain only semantically relevant words. This document is treated as a bag-of-words, in which relative ordering is irrelevant. In spite of the obvious loss of ordering information in this representation, the bag-of-words representation is surprisingly effective.

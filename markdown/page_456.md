@@ -1,0 +1,18 @@
+
+The agglomerative clustering of $m$ documents in the first iteration of the fractionation algorithm requires $O(m^2)$ time for each group, and sums to $O(n \cdot m)$ over the $n/m$ different groups. As the number of individuals reduces geometrically by a factor of $\nu$ in each iteration, the total running time over all iterations is $O(n \cdot m \cdot (1 + \nu + \nu^2 + \ldots))$. For $\nu < 1$, the running time over all iterations is still $O(n \cdot m)$. By selecting $m = O(k)$, one still ensure a running time of $O(n \cdot k)$ for the initialization procedure.
+
+The buckshot and fractionation procedures require $O(k \cdot n)$ time. This is equivalent to the running time of a single iteration of the $k$-means algorithm. As discussed below, this is important in (asymptotically) balancing the running time of the two phases of the algorithm.
+
+When the initial cluster centers have been determined with the use of the buckshot or fractionation algorithms, one can apply the $k$-means algorithm with the seeds obtained in the first step. Each document is assigned to the nearest of the $k$ cluster centers. The centroid of each such cluster is determined as the concatenation of the documents in that cluster. Furthermore, the less frequent words of each centroid are removed. These centroids replace the seeds from the previous iteration. This process can be iteratively repeated to refine the cluster centers. Typically, only a small constant number of iterations is required because the greatest improvements occur only in the first few iterations. This ensures that the overall running time of each of the first and second phases is $O(k \cdot n)$.
+
+It is also possible to use a number of enhancements after the second clustering phase. These enhancements are as follows:
+
+- **Split operation**: The process of splitting can be used to further refine the clusters into groups of better granularity. This can be achieved by applying the buckshot procedure on the individual documents in a cluster by using $k = 2$ and then reclustering around these centers. This entire procedure requires $O(k \cdot n_i)$ time for a cluster containing $n_i$ documents, and therefore splitting all the groups requires $O(k \cdot n)$ time. However, it is not necessary to split all the groups. Instead, only a subset of the groups can be split. These are the groups that are not very coherent and contain documents of a disparate nature. To measure the coherence of a group, the self-similarity of the documents in the cluster is computed. This self-similarity provides an understanding of the underlying coherence. This quantity can be computed either in terms of the average similarity of the documents in a cluster to its centroid or in terms of the average similarity of the cluster documents to each other. The split criterion can then be applied selectively only to those clusters that have low self-similarity. This helps in creating more coherent clusters.
+
+- **Join operation**: The join operation merges similar clusters into a single cluster. To perform the merging, the topical words of each cluster are computed, as the most frequent words in the centroid of the cluster. Two clusters are considered similar if there is significant overlap between the topical words of the two clusters.
+
+The scatter/gather approach is effective because of its ability to combine hierarchical and $k$-means algorithms.
+
+## 13.3.2 Probabilistic Algorithms
+
+Probabilistic text clustering can be considered an unsupervised version of the naive Bayes classification method discussed in Sect. 10.5.1 of Chap. 10. It is assumed that the documents need to be assigned to one of $k$ clusters $g_1 \ldots g_k$. The basic idea is to use the following generative process:
